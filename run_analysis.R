@@ -78,3 +78,4 @@
     ID <- c("Subject", "Activity")
     setkeyv(combineddata, ID)
     tidydata <- combineddata[, lapply(.SD,mean), by = key(combineddata)]
+    write.table(tidydata, file = "RGtidydata.txt", row.names=FALSE)
