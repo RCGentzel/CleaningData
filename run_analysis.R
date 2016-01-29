@@ -9,7 +9,8 @@
     unzip("./datacleaningassignment/UCI.zip", exdir= "./datacleaningassignment")
 
 ##Load the dplyr library 
-    library(dplyr, data.table)
+    library(dplyr)
+    library(data.table)
 
 ## Read in X_training file and label the columns with the appropriate feature descriptions
     xtrain<- read.table("./datacleaningassignment/UCI HAR Dataset/train/X_train.txt")
@@ -78,4 +79,12 @@
     ID <- c("Subject", "Activity")
     setkeyv(combineddata, ID)
     tidydata <- combineddata[, lapply(.SD,mean), by = key(combineddata)]
+    colnames(tidydata)<-gsub("(\\-mean*)", "mean",colnames(tidydata))
+    colnames(tidydata)<-gsub("(\\-std*)", "std",colnames(tidydata))
+    colnames(tidydata)<-gsub("\\()-", "",colnames(tidydata))
+    colnames(tidydata)<-gsub("\\()-", "",colnames(tidydata))
+    colnames(tidydata)<-tolower(colnames(tidydata))
+    
     write.table(tidydata, file = "RGtidydata.txt", row.names=FALSE)
+    
+    
